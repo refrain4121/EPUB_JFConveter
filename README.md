@@ -11,7 +11,9 @@ please install it before use.
 
 ==============
 USUAGE:
-put the file in source folder and run main.py with python
+
+put the file in source folder and run main.py with python.
+
 result will in the folder.
 
 
