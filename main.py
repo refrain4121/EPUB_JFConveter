@@ -19,6 +19,10 @@ outputPath = os.path.join(path, "Output")
 workingPath = os.path.join(path, "temp")
 textFileFilter = [".txt", ".html", ".xhtml", ".ncx", ".opf"]
 
+if not os.path.exists(sourcePath): 
+    os.mkdir(sourcePath)
+    print ("put epub in source folder and run again")
+if not os.path.exists(outputPath): os.mkdir(outputPath)
 if not os.path.exists(workingPath): os.mkdir(workingPath)
 
 for file in os.listdir(sourcePath):
