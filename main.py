@@ -1,5 +1,5 @@
 #-*- coding:utf-8 -*-
-import os, shutil, zipfile
+import os, sys, shutil, zipfile
 from jianfan import *
     
 def translate(dirPath, filename):
@@ -21,7 +21,7 @@ textFileFilter = [".txt", ".html", ".xhtml", ".ncx", ".opf"]
 
 if not os.path.exists(sourcePath): 
     os.mkdir(sourcePath)
-    print ("put epub in source folder and run again")
+    sys.exit("put epub in source folder and run again")
 if not os.path.exists(outputPath): os.mkdir(outputPath)
 if not os.path.exists(workingPath): os.mkdir(workingPath)
 
@@ -56,4 +56,6 @@ for file in os.listdir(sourcePath):
     newZip.close()
     
     shutil.rmtree(tempFilePath)
-
+    
+os.rmdir(workingPath)
+sys.exit("Done")
