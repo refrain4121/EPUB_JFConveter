@@ -109,3 +109,53 @@ def test():
 
 if __name__ == '__main__':
     test()
+   
+simplifedPhase = ["",""]
+traditionPhase = ["",""]
+if len(simplifedPhase) != len(traditionPhase):
+    os.exit("phrase length not match")
+else:
+    listLength = len(simplifedPhase)
+    
+simplfiedWord  = ""
+traditoinWord  = ""   
+
+def StoC(text):
+    for index in listLength:
+        if simplifedPhase[index] in text:
+            text.replace(simplifedPhase[index], traditionPhase[index])
+    
+    ret = "" 
+    for word in text:
+        i = simplfiedWord.find(word)
+        ret.append(traditoinWord[i] if i!=-1 else word)
+        
+    return ret
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

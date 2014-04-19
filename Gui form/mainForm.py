@@ -1,39 +1,55 @@
 #-*- coding : utf8 -*-
 # /usr/bin/env python
-import sys, ntpath
+import os, sys, ntpath
 from PyQt5 import QtCore, QtGui, QtWidgets
 from layout import Ui_MainWindow
+from EpubconvertScript import *
 
-class window():
+FILEPATHROLE = 33
+
+class CustomMainWindow(QtWidgets.QMainWindow):
     def __init__(self):
-        self.ui = QtWidgets.QMainWindow()
-        x = Ui_MainWindow()
-        x.setupUi(self.ui)
+        QtWidgets.QMainWindow.__init__(self)
         
+        x = Ui_MainWindow()
+        x.setupUi(self)
+        
+        self.converter = Converter()
         self.Files = QtGui.QStandardItemModel()
         
         self.connect()
-        
+    
     def connect(self):
-        self.ui.listView.trigger.connect(self.receiveFile)
+        self.listView.trigger.connect(self.receiveFile)
+        self.pushButton.clicked.connect(self.startConvert)
         
-        self.ui.listView.setModel(self.Files)
+        self.listView.setModel(self.Files)
        
     def receiveFile(self, urls):
         
         for url in urls: 	
             
-            fileName, fileExtension = os.path.splitext(url)
+            fileName, fileExtension = os.path.splitext(os.path.basename(url))
             
             if (fileExtension == '.epub'):
-                item = QtGui.QStandardItem()
+                item = QtGui.QStandardItem(fileName)
+                item.setData(url, FILEPATHROLE)
                 self.Files.appendRow(item)
-            
+    
+    def startConvert(self):
+        dir = QtWidgets.QFileDialog.getExistingDirectory(self, "Choose Destination ", os.path.expanduser("~"), QtWidgets.QFileDialog.ShowDirsOnly)
+        for index in range(self.Files.rowCount()):
+            item = self.Files.item(index)
+            self.converter.convert(item.data(FILEPATHROLE), dir)
+        
+        
+    def closeEvent(self, event):
+        self.converter.close()
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = window()
-    MainWindow.ui.show()
+    MainWindow = CustomMainWindow()
+    MainWindow.show()
     sys.exit(app.exec_())
 
