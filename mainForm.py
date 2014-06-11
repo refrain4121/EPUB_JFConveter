@@ -18,13 +18,13 @@ class CustomMainWindow(QtWidgets.QMainWindow):
         x.setupUi(self)
         
         self.connect()
+        
+        self.listView.setModel(self.Files)
     
     def connect(self):
         self.listView.trigger.connect(self.receiveFile)
         self.pushButton.clicked.connect(self.startConvert)
-        
-        self.listView.setModel(self.Files)
-       
+ 
     def receiveFile(self, urls):
         
         for url in urls: 	
@@ -42,17 +42,16 @@ class CustomMainWindow(QtWidgets.QMainWindow):
         
         dir = QtWidgets.QFileDialog.getExistingDirectory(self, "Choose Destination ", os.path.expanduser("~"), QtWidgets.QFileDialog.ShowDirsOnly)
         
-        translateList = []
+        transList = []
         for index in range(self.Files.rowCount()):
             item = self.Files.item(index)
-            translateList.append(item.data(FILEPATHROLE))
+            transList.append(item.data(FILEPATHROLE))
         
         index = 0
-        for file in translateList:
+        for file in transList:
             self.converter.convert(file, dir)
             index += 1       
-
-            
+    
         self.Files.removeRows(0, self.Files.rowCount())
         self.pushButton.setEnabled(True)
         
