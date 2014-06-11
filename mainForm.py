@@ -48,10 +48,13 @@ class CustomMainWindow(QtWidgets.QMainWindow):
             transList.append(item.data(FILEPATHROLE))
         
         index = 0
-        for file in transList:
-            self.converter.convert(file, dir)
-            index += 1       
-    
+        try:
+            for file in transList:
+                self.converter.convert(file, dir)
+                index += 1       
+        except:
+            msg = "Unexpected error:", sys.exc_info()[0]
+            QMessageBox.warning (parent = self,title = "Error", text = msg)
         self.Files.removeRows(0, self.Files.rowCount())
         self.pushButton.setEnabled(True)
         
@@ -60,7 +63,6 @@ class CustomMainWindow(QtWidgets.QMainWindow):
         self.converter.close()
 
 if __name__ == "__main__":
-    import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = CustomMainWindow()
     MainWindow.show()

@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
-
+# default position 
+WordDic = "Dictionary/phrase_s2t.txt"
+PhraseDic = "Dictionary/word_s2t.txt"
 
 class ZhTranslator:
-    def __init__(self, wordDic, phraseDic):
+    def __init__(self, wordDic = WordDic, phraseDic = PhraseDic):
         
         self.simplifedPhase = []
         self.traditionPhase = []

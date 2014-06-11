@@ -2,19 +2,21 @@
 # /usr/bin/env python
 
 import os,shutil, zipfile
-from TSConvertScript import *
+from TSConvertScript import ZhTranslator
 
 class Converter(object):
     def __init__(self):
         self.tempFolder = os.path.join(os.getcwd(), "Temp")
         self.textFileFilter = [".txt", ".html", ".xhtml", ".ncx", ".opf"]
         
+        self.zhTranslator = ZhTranslator()
+        
         if not os.path.exists(self.tempFolder): os.mkdir(self.tempFolder)
         
     def convert(self, filepath, destinatonPath):
         fileName, fileExtend = os.path.splitext(os.path.basename(filepath))
         
-        newname = StoT(fileName)
+        newname = zhTranslator.StoT(fileName)
         
         # create temp folder
         tempFilePath = os.path.join(self.tempFolder, newname)
@@ -47,7 +49,7 @@ class Converter(object):
         rf = open(os.path.join(dirPath, filename), encoding = "utf8")
         translated = []
         for line in rf:
-            translated.append(StoT(line)) 
+            translated.append(zhTranslator.StoT(line)) 
         rf.close()
         
         wf = open(os.path.join(dirPath, filename), "w", encoding = "utf8")
