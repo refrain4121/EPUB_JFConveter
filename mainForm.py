@@ -38,8 +38,7 @@ class CustomMainWindow(QtWidgets.QMainWindow):
     
     def startConvert(self):
         self.pushButton.setEnabled(False)
-        self.progressBar.reset()
-        self.progressBar.setMaximum(self.Files.rowCount())
+
         
         dir = QtWidgets.QFileDialog.getExistingDirectory(self, "Choose Destination ", os.path.expanduser("~"), QtWidgets.QFileDialog.ShowDirsOnly)
         
@@ -51,12 +50,10 @@ class CustomMainWindow(QtWidgets.QMainWindow):
         index = 0
         for file in translateList:
             self.converter.convert(file, dir)
-            index += 1
-            self.progressBar.setValue(index)            
+            index += 1       
 
             
         self.Files.removeRows(0, self.Files.rowCount())
-        self.progressBar.reset()
         self.pushButton.setEnabled(True)
         
         
