@@ -1,6 +1,6 @@
 #-*- coding : utf8 -*-
 # /usr/bin/env python
-import os, sys, ntpath
+import os, sys, traceback
 from PyQt5 import QtCore, QtGui, QtWidgets
 from layout import Ui_MainWindow
 from EpubconvertScript import *
@@ -53,8 +53,8 @@ class CustomMainWindow(QtWidgets.QMainWindow):
                 self.converter.convert(file, dir)
                 index += 1       
         except:
-            msg = "Unexpected error:", sys.exc_info()[0]
-            QMessageBox.warning (parent = self,title = "Error", text = msg)
+            msg = "Unexpected error:" + traceback.format_exc()
+            QtWidgets.QMessageBox.warning (self, "Error", msg)
         self.Files.removeRows(0, self.Files.rowCount())
         self.pushButton.setEnabled(True)
         

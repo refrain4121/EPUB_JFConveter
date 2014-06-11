@@ -16,7 +16,7 @@ class Converter(object):
     def convert(self, filepath, destinatonPath):
         fileName, fileExtend = os.path.splitext(os.path.basename(filepath))
         
-        newname = zhTranslator.StoT(fileName)
+        newname = self.zhTranslator.StoT(fileName)
         
         # create temp folder
         tempFilePath = os.path.join(self.tempFolder, newname)
@@ -49,7 +49,7 @@ class Converter(object):
         rf = open(os.path.join(dirPath, filename), encoding = "utf8")
         translated = []
         for line in rf:
-            translated.append(zhTranslator.StoT(line)) 
+            translated.append(self.zhTranslator.StoT(line)) 
         rf.close()
         
         wf = open(os.path.join(dirPath, filename), "w", encoding = "utf8")
