@@ -58,7 +58,3 @@ class Converter(object):
     def close(self):
         shutil.rmtree(self.tempFolder)
         
-if __name__ == "__main__":
-    c= Converter()
-    c.convert("C3—魔幻三次方—Ⅰ.epub", os.path.join(os.getcwd(), "test"))
-    c.close()

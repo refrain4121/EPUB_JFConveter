@@ -10,12 +10,12 @@ FILEPATHROLE = 33
 class CustomMainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)
+
+        self.Files = QtGui.QStandardItemModel()
+        self.converter = Converter()
         
         x = Ui_MainWindow()
         x.setupUi(self)
-        
-        self.converter = Converter()
-        self.Files = QtGui.QStandardItemModel()
         
         self.connect()
     
@@ -37,10 +37,27 @@ class CustomMainWindow(QtWidgets.QMainWindow):
                 self.Files.appendRow(item)
     
     def startConvert(self):
+        self.pushButton.setEnabled(False)
+        self.progressBar.reset()
+        self.progressBar.setMaximum(self.Files.rowCount())
+        
         dir = QtWidgets.QFileDialog.getExistingDirectory(self, "Choose Destination ", os.path.expanduser("~"), QtWidgets.QFileDialog.ShowDirsOnly)
+        
+        translateList = []
         for index in range(self.Files.rowCount()):
             item = self.Files.item(index)
-            self.converter.convert(item.data(FILEPATHROLE), dir)
+            translateList.append(item.data(FILEPATHROLE))
+        
+        index = 0
+        for file in translateList:
+            self.converter.convert(file, dir)
+            index += 1
+            self.progressBar.setValue(index)            
+
+            
+        self.Files.removeRows(0, self.Files.rowCount())
+        self.progressBar.reset()
+        self.pushButton.setEnabled(True)
         
         
     def closeEvent(self, event):

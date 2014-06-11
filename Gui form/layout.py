@@ -1,11 +1,4 @@
-# -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'untitled.ui'
-#
-# Created: Sat Apr 12 01:59:22 2014
-#      by: PyQt5 UI code generator 5.2.1
-#
-# WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -39,6 +32,10 @@ class CustomListView(QtWidgets.QListView):
             self.trigger.emit(links)
         else:
             event.ignore()
+     
+    # def paintEvent(self, event):
+        # print (self.model().rowCount())
+        # if (self.model() and self.model().rowCount(self.rootIndex())): return
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -60,6 +57,8 @@ class Ui_MainWindow(object):
         MainWindow.pushButton.setObjectName("pushButton")
         MainWindow.horizontalLayout.addWidget(MainWindow.pushButton)
         MainWindow.verticalLayout.addLayout(MainWindow.horizontalLayout)
+        MainWindow.progressBar = QtWidgets.QProgressBar(MainWindow.centralwidget)
+        MainWindow.verticalLayout.addWidget(MainWindow.progressBar)
         MainWindow.setCentralWidget(MainWindow.centralwidget)
         MainWindow.statusbar = QtWidgets.QStatusBar(MainWindow)
         MainWindow.statusbar.setObjectName("statusbar")
@@ -70,8 +69,8 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        MainWindow.pushButton.setText(_translate("MainWindow", "PushButton"))
+        MainWindow.setWindowTitle(_translate("EpubConveter", "EpubConveter"))
+        MainWindow.pushButton.setText(_translate("MainWindow", "Convert"))
 
 
 if __name__ == "__main__":
